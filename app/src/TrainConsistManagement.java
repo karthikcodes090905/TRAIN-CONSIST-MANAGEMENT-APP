@@ -20,5 +20,6 @@ public class TrainAppUC5 {
 
         // Display final formation
         System.out.println("Final Train Formation: " + train);
+        System.out.println("the end");
     }
 }
