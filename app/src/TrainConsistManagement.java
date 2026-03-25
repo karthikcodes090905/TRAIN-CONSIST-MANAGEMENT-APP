@@ -1,34 +1,22 @@
-import java.util.ArrayList;
+import java.util.HashSet;
 
-public class TrainAppUC2 {
+public class TrainAppUC3 {
 
     public static void main(String[] args) {
 
         System.out.println("=== Train Consist Management App ===");
 
-        // Create ArrayList for passenger bogies
-        ArrayList<String> bogies = new ArrayList<>();
+        // Create HashSet for unique bogie IDs
+        HashSet<String> bogieIds = new HashSet<>();
 
-        // Add bogies
-        bogies.add("Sleeper");
-        bogies.add("AC Chair");
-        bogies.add("First Class");
+        // Add bogie IDs
+        bogieIds.add("B1");
+        bogieIds.add("B2");
+        bogieIds.add("B3");
+        bogieIds.add("B2"); // duplicate
+        bogieIds.add("B1"); // duplicate
 
-        // Display bogies after insertion
-        System.out.println("Bogies after addition: " + bogies);
-
-        // Remove a bogie
-        bogies.remove("AC Chair");
-        System.out.println("After removing AC Chair: " + bogies);
-
-        // Check existence
-        if (bogies.contains("Sleeper")) {
-            System.out.println("Sleeper bogie exists in the train");
-        } else {
-            System.out.println("Sleeper bogie not found");
-        }
-
-        // Final state
-        System.out.println("Final Train Consist: " + bogies);
+        // Display unique bogie IDs
+        System.out.println("Unique Bogie IDs: " + bogieIds);
     }
 }
