@@ -1,8 +1,7 @@
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
-// Bogie class
+// Reusing Bogie class
 class Bogie {
     String name;
     int capacity;
@@ -17,7 +16,7 @@ class Bogie {
     }
 }
 
-public class TrainAppUC7 {
+public class TrainAppUC9 {
 
     public static void main(String[] args) {
 
@@ -25,19 +24,20 @@ public class TrainAppUC7 {
 
         // Create list of bogies
         List<Bogie> bogies = new ArrayList<>();
-
-        // Add bogies
         bogies.add(new Bogie("Sleeper", 72));
         bogies.add(new Bogie("AC Chair", 78));
         bogies.add(new Bogie("First Class", 24));
+        bogies.add(new Bogie("Sleeper", 70)); // duplicate type for grouping
 
-        // Sort using Comparator (by capacity)
-        bogies.sort(Comparator.comparingInt(b -> b.capacity));
+        // Group bogies by name
+        Map<String, List<Bogie>> groupedBogies = bogies.stream()
+                .collect(Collectors.groupingBy(b -> b.name));
 
-        // Display sorted bogies
-        System.out.println("Sorted Bogies by Capacity:");
-        for (Bogie b : bogies) {
-            System.out.println(b);
+        // Display grouped bogies
+        System.out.println("Grouped Bogies:");
+
+        for (Map.Entry<String, List<Bogie>> entry : groupedBogies.entrySet()) {
+            System.out.println(entry.getKey() + " -> " + entry.getValue());
         }
     }
 }
