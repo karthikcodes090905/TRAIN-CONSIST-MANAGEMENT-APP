@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 // Bogie class
 class Bogie {
@@ -10,38 +11,45 @@ class Bogie {
         this.name = name;
         this.capacity = capacity;
     }
-
-    public String toString() {
-        return name + " -> " + capacity;
-    }
 }
 
-// Functional Interface
-interface BogieRule {
-    boolean apply(Bogie b);
-}
-
-public class TrainAppUC12 {
+public class TrainAppUC13 {
 
     public static void main(String[] args) {
 
         System.out.println("=== Train Consist Management App ===");
 
-        // Create bogies
+        // Create large list of bogies
         List<Bogie> bogies = new ArrayList<>();
-        bogies.add(new Bogie("Sleeper", 72));
-        bogies.add(new Bogie("AC Chair", 78));
-        bogies.add(new Bogie("First Class", 24));
+        for (int i = 0; i < 100000; i++) {
+            bogies.add(new Bogie("Sleeper", (i % 100) + 1));
+        }
 
-        // Lambda rule: capacity > 50
-        BogieRule highCapacityRule = b -> b.capacity > 50;
+        // 🔹 Loop-based filtering
+        long startLoop = System.nanoTime();
 
-        // Apply rule
-        System.out.println("Bogies with capacity > 50:");
+        List<Bogie> loopResult = new ArrayList<>();
         for (Bogie b : bogies) {
-            if (highCapacityRule.apply(b)) {
-                System.out.println(b);
+            if (b.capacity > 50) {
+                loopResult.add(b);
             }
         }
+
+        long endLoop = System.nanoTime();
+        long loopTime = endLoop - startLoop;
+
+        // 🔹 Stream-based filtering
+        long startStream = System.nanoTime();
+
+        List<Bogie> streamResult = bogies.stream()
+                .filter(b -> b.capacity > 50)
+                .collect(Collectors.toList());
+
+        long endStream = System.nanoTime();
+        long streamTime = endStream - startStream;
+
+        // Display results
+        System.out.println("Loop Time (ns): " + loopTime);
+        System.out.println("Stream Time (ns): " + streamTime);
     }
 }
