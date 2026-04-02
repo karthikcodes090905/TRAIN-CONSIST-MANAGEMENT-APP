@@ -1,5 +1,5 @@
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
 
 // Reusing Bogie class
 class Bogie {
@@ -10,13 +10,9 @@ class Bogie {
         this.name = name;
         this.capacity = capacity;
     }
-
-    public String toString() {
-        return name + " -> " + capacity;
-    }
 }
 
-public class TrainAppUC9 {
+public class TrainAppUC10 {
 
     public static void main(String[] args) {
 
@@ -27,17 +23,13 @@ public class TrainAppUC9 {
         bogies.add(new Bogie("Sleeper", 72));
         bogies.add(new Bogie("AC Chair", 78));
         bogies.add(new Bogie("First Class", 24));
-        bogies.add(new Bogie("Sleeper", 70)); // duplicate type for grouping
 
-        // Group bogies by name
-        Map<String, List<Bogie>> groupedBogies = bogies.stream()
-                .collect(Collectors.groupingBy(b -> b.name));
+        // Aggregate total capacity using stream
+        int totalCapacity = bogies.stream()
+                .map(b -> b.capacity)
+                .reduce(0, (sum, cap) -> sum + cap);
 
-        // Display grouped bogies
-        System.out.println("Grouped Bogies:");
-
-        for (Map.Entry<String, List<Bogie>> entry : groupedBogies.entrySet()) {
-            System.out.println(entry.getKey() + " -> " + entry.getValue());
-        }
+        // Display result
+        System.out.println("Total Seating Capacity: " + totalCapacity);
     }
 }
